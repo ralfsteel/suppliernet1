@@ -57,7 +57,7 @@ def pricelist(request):
     if request.method == 'POST':
         form = PricelistForm(request.POST, request.FILES)
         if form.is_valid():
-            new_file = Pricelist(pricelist_detail=request.FILES['pricelist_detail'])
+            new_file = Pricelist(pricelist_detail=request.FILES['pricelist_detail'], pricelist_name=request.POST['pricelist_name'])
             new_file.save()
 
             return HttpResponseRedirect(reverse('gemma.views.pricelist'))
