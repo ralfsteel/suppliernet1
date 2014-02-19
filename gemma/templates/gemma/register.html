@@ -1,0 +1,12 @@
+<head>
+      <title>Registration Page</title>
+      <h1>Registration Form</h1>
+          <form action = "/gemma/register/" method="post">
+                {% csrf_token %}
+                        <ul>
+                        {{ form.as_p }}
+                        </ul>
+                 <input type = "submit" value = "Register">
+
+           </form>
+   </head>

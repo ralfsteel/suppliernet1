@@ -1,0 +1,12 @@
+<h1>Login to Gemma</h1>
+          <form action="/gemma/login/" method="post">
+              <h2>Please sign in</h2>
+               {% csrf_token %}
+              {{ form.as_p }}
+        {% if bad_details %}
+        <p><strong>Your email and/or password were incorrect!</strong></p>
+              {% endif %}
+              <br />
+        <button class="btn btn-primary" type="submit">Login</button>
+
+          </form>

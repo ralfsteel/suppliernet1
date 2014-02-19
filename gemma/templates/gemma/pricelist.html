@@ -1,0 +1,41 @@
+<html>
+       <head>
+            <title>Pricelist Detail page</title>
+            <h1>Pricelist Detail Page</h1>
+
+            {% if pricelists %}
+                    <ul>
+                    {% for pricelist in pricelists %}
+                        {{ pricelist_name }}
+                    {% endfor %}
+            {% else %}
+                    <p> No Documetns </p>
+            {% endif %}
+                    </ul>
+
+         <form action="/gemma/pricelist/" method="post" enctype="multipart/form-data">
+             {% csrf_token %}
+             <ul>
+             {{ form.as_p }}
+             </ul>
+            <p><input type= "submit" value="Upload"></p>
+         </form>
+       </head>
+ </html>
+
+
+
+
+
+
+
+
+
+
+        </head>
+
+
+
+
+
+</html>
