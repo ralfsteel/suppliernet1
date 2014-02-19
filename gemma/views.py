@@ -65,10 +65,9 @@ def pricelist(request):
             form = PricelistForm()
 
     pricelists = Pricelist.objects.all()
-
     context_dict = {
         'form': form,
-        'pricelists': pricelists
+        'pricelists': pricelists,
     }
 
     return render_to_response('gemma/pricelist.html', context_dict, context)

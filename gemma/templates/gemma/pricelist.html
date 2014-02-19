@@ -1,16 +1,17 @@
 <html>
        <head>
             <title>Pricelist Detail page</title>
-            <h1>Pricelist Detail Page</h1>
-
-            {% if pricelists %}
+            <h1>Add an item</h1>
+       </head>
+       <body>
+                 {% if pricelists %}
                     <ul>
                     {% for pricelist in pricelists %}
-                        {{ pricelist_name }}
+                        <li><a href="{{ pricelist.pricelist_detail.url }}"> {{ pricelist.pricelist_name }}</a> </li>
                     {% endfor %}
-            {% else %}
-                    <p> No Documetns </p>
-            {% endif %}
+                 {% else %}
+                        <p>No Document</p>
+                 {% endif %}
                     </ul>
 
          <form action="/gemma/pricelist/" method="post" enctype="multipart/form-data">
@@ -20,22 +21,6 @@
              </ul>
             <p><input type= "submit" value="Upload"></p>
          </form>
-       </head>
+       </body>
  </html>
 
-
-
-
-
-
-
-
-
-
-        </head>
-
-
-
-
-
-</html>
