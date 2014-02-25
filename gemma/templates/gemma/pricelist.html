@@ -7,7 +7,10 @@
                  {% if pricelists %}
                     <ul>
                     {% for pricelist in pricelists %}
-                        <li><a href="{{ pricelist.pricelist_detail.url }}"> {{ pricelist.pricelist_name }}</a> </li>
+                        <li>
+                            <input type="checkbox" name="pricelist" value="{{ pricelist.pricelist_name }}">
+                            <a href="{{ pricelist.pricelist_detail.url }}"> {{ pricelist.pricelist_name }}</a>
+                        </li>
                     {% endfor %}
                  {% else %}
                         <p>No Document</p>
@@ -20,7 +23,17 @@
              {{ form.as_p }}
              </ul>
             <p><input type= "submit" value="Upload"></p>
+
          </form>
+
+         <form action="/gemma/pricelist/" method="post">
+          {% csrf_token %}
+         <input type="text" name="pricelist_name"/>
+         <input type="submit" value="Delete"/>
+        </form>
+
+
+
        </body>
  </html>
 

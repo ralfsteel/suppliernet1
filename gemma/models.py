@@ -1,11 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+
 
 
 
 # Create your models here.
 class Userprofile(models.Model):
     user = models.OneToOneField(User)
+
+    def __unicode__(self):
+        return self.user.username
 
 
 class Producers(models.Model):
@@ -41,9 +46,13 @@ class Resellers(models.Model):
 class Pricelist(models.Model):
     pricelist_name = models.CharField(max_length=200)
     pricelist_detail = models.FileField(upload_to='media/%y/%m/%d')
+    
 
     def __unicode__(self):
         return self.pricelist_name
+
+
+
 
 
 class Promotional(models.Model):

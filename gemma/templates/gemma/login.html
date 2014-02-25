@@ -1,12 +1,24 @@
-<h1>Login to Gemma</h1>
-          <form action="/gemma/login/" method="post">
-              <h2>Please sign in</h2>
-               {% csrf_token %}
-              {{ form.as_p }}
-        {% if bad_details %}
-        <p><strong>Your email and/or password were incorrect!</strong></p>
-              {% endif %}
-              <br />
-        <button class="btn btn-primary" type="submit">Login</button>
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Is anyone getting tired of repeatedly entering the header over and over?? -->
+        <title>Rango</title>
+    </head>
 
-          </form>
+    <body>
+        <h1>Login to Rango</h1>
+
+        <a href="/gemma/register/">Register Here</a>
+
+        <form id="login_form" method="post" action="/gemma/login/">
+            {% csrf_token %}
+            Email: <input type="text" name="email" value="" size="50" />
+            <br />
+            Password: <input type="password" name="password" value="" size="50" />
+            <br />
+
+            <input type="submit" value="lgoin" />
+        </form>
+
+    </body>
+</html>

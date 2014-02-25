@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gemma',
+    'south',
 
 )
 
@@ -85,8 +86,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
-AUTHENTICATION_BACKENDS = (
-    'suppliernet1.backends.EmailAuthBackEnd',
-    'django.contrib.auth.backends.ModelBackend'
-)
 
+#AUTHENTICATION_BACKENDS = ('suppliernet1.backends.EmailAuthBackend',)

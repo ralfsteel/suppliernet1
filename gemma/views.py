@@ -1,29 +1,36 @@
 from django.template import RequestContext
 from django.shortcuts import render, render_to_response, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import reverse
 
-from gemma.forms import RegisterForm, LoginForm, PricelistForm
-from gemma.models import Pricelist
+
+from gemma.forms import UserForm, UserProfileForm, PricelistForm, PromotionalForm
+from gemma.models import Pricelist, Promotional
 
 
 def register(request):
     context = RequestContext(request)
     registered = False
     if request.method == 'POST':
-        form = RegisterForm(data=request.POST)
-        if form.is_valid():
-            user = form.save()
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileForm(data=request.POST)
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
             user.save()
+            profile = profile_form.save()
+            profile.save()
             registered = True
         else:
-            print form.errors
+            print user_form.errors, profile_form.errors
     else:
-        form = RegisterForm()
+        user_form = UserForm()
+        profile_form = UserProfileForm()
 
     context_dict = {
-        'form': form,
+        'user_form': user_form,
+        'profile_form': profile_form,
         'registered': registered
     }
 
@@ -32,25 +39,21 @@ def register(request):
 
 def login(request):
     context = RequestContext(request)
-    form = LoginForm()
     if request.method == 'POST':
-        form = LoginForm(data=request.POST)
-        if form.is_valid():
-            email = request.POST['email']
-            password = request.POST['password']
-            user = authenticate(email=email, password=password)
-            if user is not None:
-                login(request, user)
-                return HttpResponse("logged in")
-            else:
-                return HttpResponse("Invalid Data")
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(email=email, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponse("Login Succesful")
+        else:
+            return HttpResponse("Invalid detail")
 
-    context_dict = {
-        'form': form,
+    return render_to_response('gemma/login.html', context)
 
-    }
 
-    return render_to_response('gemma/login.html', context_dict, context)
+
+
 
 def pricelist(request):
     context = RequestContext(request)
@@ -61,16 +64,49 @@ def pricelist(request):
             new_file.save()
 
             return HttpResponseRedirect(reverse('gemma.views.pricelist'))
+
     else:
             form = PricelistForm()
+
+    if request.method == 'POST' and request.POST.get('pricelist_name'):
+        pricelist_name = request.POST['pricelist_name']
+        Pricelist.objects.filter(pricelist_name=pricelist_name).delete()
 
     pricelists = Pricelist.objects.all()
     context_dict = {
         'form': form,
         'pricelists': pricelists,
+
     }
 
     return render_to_response('gemma/pricelist.html', context_dict, context)
+
+
+def promotional(request):
+    context = RequestContext(request)
+    if request.method == 'POST':
+        form = PromotionalForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_file = Promotional(promotional_detail=request.FILES['promotional_detail'], promotional_name=request.POST['promotional_name'])
+            new_file.save()
+
+            return HttpResponseRedirect(reverse('gemma.views.promotional'))
+
+    else:
+            form = PromotionalForm()
+
+    if request.method == 'POST' and request.POST.get('promotional_name'):
+        promotional_name = request.POST['promotional_name']
+        Promotional.objects.filter(promotional_name=promotional_name).delete()
+
+    promotionals = Promotional.objects.all()
+    context_dict = {
+        'form': form,
+        'promotionals': promotionals,
+
+    }
+
+    return render_to_response('gemma/promotional.html', context_dict, context)
 
 
 

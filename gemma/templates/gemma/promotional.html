@@ -1,0 +1,35 @@
+<html>
+       <head>
+            <title>Promotional Detail page</title>
+            <h1>Add an item</h1>
+       </head>
+       <body>
+                 {% if promotionals %}
+                    <ul>
+                    {% for promotional in promotionals %}
+                        <li>
+                            <a href="{{ promotional.promotional_detail.url }}"> {{ promotional.promotional_name }}</a>
+                        </li>
+                    {% endfor %}
+                 {% else %}
+                        <p>No Document</p>
+                 {% endif %}
+                    </ul>
+
+           <form action="/gemma/promotional/" method="post" enctype="multipart/form-data">
+               {% csrf_token %}
+               <ul>
+               {{ form.as_p }}
+               </ul>
+              <p><input type= "submit" value="Upload"></p>
+
+           </form>
+
+           <form action="/gemma/promotional/" method="post">
+             {% csrf_token %}
+           <input type="text" name="promotional_name"/>
+           <input type="submit" value="Delete"/>
+           </form>
+
+        </body>
+</html>

@@ -19,9 +19,9 @@ class PricelistAdmin(admin.ModelAdmin):
 class PromotionalAdmin(admin.ModelAdmin):
     list_display = ('promotional_name', 'promotional_detail')
 
+
 admin.site.register(Userprofile, UserprofileAdmin)
 admin.site.register(Promotional, PromotionalAdmin)
 admin.site.register(Pricelist, PricelistAdmin)
 admin.site.register(Producers, ProducersAdmin)
 admin.site.register(Resellers, ResellersAdmin)
-
