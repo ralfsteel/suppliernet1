@@ -72,7 +72,7 @@ def pricelist(request):
         pricelist_name = request.POST['pricelist_name']
         Pricelist.objects.filter(pricelist_name=pricelist_name).delete()
 
-    pricelists = Pricelist.objects.all()
+    pricelists = Pricelist.objects.all().order_by('-created')
     context_dict = {
         'form': form,
         'pricelists': pricelists,
@@ -99,7 +99,7 @@ def promotional(request):
         promotional_name = request.POST['promotional_name']
         Promotional.objects.filter(promotional_name=promotional_name).delete()
 
-    promotionals = Promotional.objects.all()
+    promotionals = Promotional.objects.all().order_by('-created')
     context_dict = {
         'form': form,
         'promotionals': promotionals,

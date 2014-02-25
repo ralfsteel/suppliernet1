@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+import datetime
+
 
 
 
@@ -46,18 +48,16 @@ class Resellers(models.Model):
 class Pricelist(models.Model):
     pricelist_name = models.CharField(max_length=200)
     pricelist_detail = models.FileField(upload_to='media/%y/%m/%d')
-    
+    created = models.DateTimeField(auto_now_add=True, blank=True)
 
     def __unicode__(self):
         return self.pricelist_name
 
 
-
-
-
 class Promotional(models.Model):
    promotional_name = models.CharField(max_length=200)
    promotional_detail = models.FileField(upload_to='media/%y/%m/%d')
+   created = models.DateTimeField(auto_now_add=True, blank=True)
 
    def __unicode__(self):
        return self.promotional_name

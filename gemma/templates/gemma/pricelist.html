@@ -9,7 +9,7 @@
                     {% for pricelist in pricelists %}
                         <li>
                             <input type="checkbox" name="pricelist" value="{{ pricelist.pricelist_name }}">
-                            <a href="{{ pricelist.pricelist_detail.url }}"> {{ pricelist.pricelist_name }}</a>
+                            <a href="{{ pricelist.pricelist_detail.url }}"> {{ pricelist.pricelist_name }}</a> --------{{ pricelist.created }}
                         </li>
                     {% endfor %}
                  {% else %}

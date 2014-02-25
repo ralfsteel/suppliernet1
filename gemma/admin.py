@@ -14,10 +14,10 @@ class ResellersAdmin(admin.ModelAdmin):
     list_filter = ('producers', )
 
 class PricelistAdmin(admin.ModelAdmin):
-    list_display = ('pricelist_name', 'pricelist_detail')
+    list_display = ('pricelist_name', 'pricelist_detail', 'created')
 
 class PromotionalAdmin(admin.ModelAdmin):
-    list_display = ('promotional_name', 'promotional_detail')
+    list_display = ('promotional_name', 'promotional_detail', 'created')
 
 
 admin.site.register(Userprofile, UserprofileAdmin)

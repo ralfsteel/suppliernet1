@@ -24,7 +24,7 @@ class PricelistForm(forms.ModelForm):
 
     class Meta:
         model = Pricelist
-        fields = ['pricelist_name', 'pricelist_detail']
+        fields = ['pricelist_name', 'pricelist_detail', ]
 
 class PromotionalForm(forms.ModelForm):
 
