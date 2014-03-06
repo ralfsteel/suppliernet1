@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import reverse
 
 
-from gemma.forms import UserForm, UserProfileForm, PricelistForm, PromotionalForm
+from gemma.forms import UserForm, UserProfileForm, PricelistForm, PromotionalForm, PricelistMain, PricelistMainForm
 from gemma.models import Pricelist, Promotional
 
 
@@ -55,7 +55,10 @@ def login(request):
 
 
 
-def pricelist(request):
+def pricelist(request, plist_pk):
+    plist = PricelistMain.objects.get(pk=plist_pk)
+    files = Pricelist.objects.filter(plist=plist_pk).order_by('-created')
+
     context = RequestContext(request)
     if request.method == 'POST':
         form = PricelistForm(request.POST, request.FILES)
@@ -72,14 +75,43 @@ def pricelist(request):
         pricelist_name = request.POST['pricelist_name']
         Pricelist.objects.filter(pricelist_name=pricelist_name).delete()
 
-    pricelists = Pricelist.objects.all().order_by('-created')
+    #pricelists = Pricelist.objects.all().order_by('-created')
     context_dict = {
         'form': form,
-        'pricelists': pricelists,
+        #'pricelists': pricelists,
+        'plist': plist,
+        'files': files
 
     }
 
     return render_to_response('gemma/pricelist.html', context_dict, context)
+
+def main_pricelist(request):
+
+    context = RequestContext(request)
+    if request.method == 'POST':
+        form = PricelistMainForm(request.POST)
+        if form.is_valid():
+            new_file = PricelistMain(name=request.POST['name'])
+            new_file.save()
+
+            return HttpResponseRedirect(reverse('gemma.views.main_pricelist'))
+        else:
+            print form.errors
+    else:
+        form = PricelistMainForm()
+
+
+    lists = PricelistMain.objects.all().order_by('-date')
+
+    context_dict = {
+        'form': form,
+        'lists': lists
+    }
+
+    return render_to_response('gemma/main_pricelist.html', context_dict, context)
+
+
 
 
 def promotional(request):
@@ -107,6 +139,7 @@ def promotional(request):
     }
 
     return render_to_response('gemma/promotional.html', context_dict, context)
+
 
 
 

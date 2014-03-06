@@ -1,21 +1,19 @@
 <html>
        <head>
             <title>Pricelist Detail page</title>
-            <h1>Add an item</h1>
+            <h1> {{ plist }} </h1>
        </head>
        <body>
-                 {% if pricelists %}
+
                     <ul>
-                    {% for pricelist in pricelists %}
+                    {% for file in files  %}
                         <li>
-                            <input type="checkbox" name="pricelist" value="{{ pricelist.pricelist_name }}">
-                            <a href="{{ pricelist.pricelist_detail.url }}"> {{ pricelist.pricelist_name }}</a> --------{{ pricelist.created }}
+                            <a href="{{ file.pricelist_detail.url }}">{{ file.pricelist_name }}</a>--{{ file.created }}
                         </li>
                     {% endfor %}
-                 {% else %}
-                        <p>No Document</p>
-                 {% endif %}
                     </ul>
+
+
 
          <form action="/gemma/pricelist/" method="post" enctype="multipart/form-data">
              {% csrf_token %}
