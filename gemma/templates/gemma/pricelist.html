@@ -4,14 +4,13 @@
             <h1> {{ plist }} </h1>
        </head>
        <body>
-
-                    <ul>
-                    {% for file in files  %}
-                        <li>
-                            <a href="{{ file.pricelist_detail.url }}">{{ file.pricelist_name }}</a>--{{ file.created }}
-                        </li>
-                    {% endfor %}
-                    </ul>
+                <ul>
+                  {% for file in files  %}
+                      <li>
+                          <a href="{{ file.pricelist_detail.url }}">{{ file.pricelist_name }}</a>--{{ file.created }}
+                      </li>
+                  {% endfor %}
+                </ul>
 
 
 
@@ -25,13 +24,10 @@
          </form>
 
          <form action="/gemma/pricelist/" method="post">
-          {% csrf_token %}
-         <input type="text" name="pricelist_name"/>
-         <input type="submit" value="Delete"/>
+              {% csrf_token %}
+             <input type="text" name="pricelist_name"/>
+             <input type="submit" value="Delete"/>
         </form>
-
-
-
        </body>
  </html>
 

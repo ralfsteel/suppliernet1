@@ -78,7 +78,6 @@ def pricelist(request, plist_pk):
     #pricelists = Pricelist.objects.all().order_by('-created')
     context_dict = {
         'form': form,
-        #'pricelists': pricelists,
         'plist': plist,
         'files': files
 
@@ -87,23 +86,30 @@ def pricelist(request, plist_pk):
     return render_to_response('gemma/pricelist.html', context_dict, context)
 
 def main_pricelist(request):
-     context = RequestContext(request)
-     if request.method == 'POST':
+    context = RequestContext(request)
+    if request.method == 'POST':
         form = PricelistMainForm(request.POST)
         if form.is_valid():
             new_file = PricelistMain(name=request.POST['name'])
             new_file.save()
+
             return HttpResponseRedirect(reverse('gemma.views.main_pricelist'))
-     else:
+
+    else:
         form = PricelistMainForm()
 
-     lists = PricelistMain.objects.all().order_by('-date')
-     context_dict = {
+    if request.method == 'POST' and request.POST.get('name'):
+        name = request.POST['name']
+        PricelistMain.objects.filter(name=name).delete()
+
+
+    lists = PricelistMain.objects.all().order_by('-date')
+    context_dict = {
         'form': form,
         'lists': lists
-     }
+    }
 
-     return render_to_response('gemma/main_pricelist.html', context_dict, context)
+    return render_to_response('gemma/main_pricelist.html', context_dict, context)
 
 
 
